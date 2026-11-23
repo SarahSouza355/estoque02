@@ -1,0 +1,1317 @@
+/* ========================================
+   1. CONFIGURAÇÕES GERAIS
+======================================== */
+
+:root {
+    --cor-fundo: #F5F5F2;
+    --cor-branco: #FFFFFF;
+
+    --cor-menu: #292D30;
+    --cor-menu-hover: #3A4043;
+
+    --cor-texto: #303536;
+    --cor-texto-secundario: #858B89;
+
+    --cor-destaque: #A68B73;
+    --cor-destaque-hover: #8F745D;
+
+    --cor-borda: #E8E8E3;
+
+    --sombra: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Container principal do app (após login) */
+.app {
+    display: flex;
+    min-height: 100vh;
+    flex: 1;
+    transition: padding-left 0.3s ease;
+    padding-left: 250px; /* Espaço para a sidebar fixa */
+}
+
+.app.oculto {
+    display: none;
+}
+
+.app.menu-fechado {
+    padding-left: 0;
+}
+
+/* Tela de login ocupa tela inteira */
+.tela-login {
+    position: fixed;
+    inset: 0;
+    background-color: var(--cor-fundo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.tela-login.oculto {
+    display: none;
+}
+
+/* ========================================
+   2. CABEÇALHO
+======================================== */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 20px;
+
+    padding: 18px 40px;
+
+    background-color: var(--cor-branco);
+    border-bottom: 1px solid var(--cor-borda);
+
+    z-index: 1000;
+    transition: left 0.3s ease;
+}
+
+.app.menu-fechado header {
+    left: 0;
+}
+
+header h1 {
+    font-size: 21px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ========================================
+   3. BOTÃO DO MENU HAMBÚRGUER
+======================================== */
+
+#botao-menu {
+    background: transparent;
+    border: none;
+
+    padding: 8px;
+    margin: 0;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    cursor: pointer;
+    flex-shrink: 0;
+
+    order: -1;
+}
+
+#botao-menu span {
+    display: block;
+
+    width: 23px;
+    height: 2px;
+
+    background-color: var(--cor-texto);
+
+    border-radius: 2px;
+
+    transition: 0.25s;
+}
+
+#botao-menu:hover {
+    background-color: #F2F0EC;
+    border-radius: 6px;
+}
+
+/* ========================================
+   4. BARRA DE PESQUISA
+======================================== */
+
+#form-busca {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: 350px;
+}
+
+#busca {
+    flex: 1;
+    min-width: 0;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+
+    background-color: var(--cor-branco);
+
+    color: var(--cor-texto);
+
+    font-size: 14px;
+
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(166, 139, 115, 0.12);
+}
+
+/* Color picker wrapper */
+.cor-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cor-picker-wrapper input[type="color"] {
+    width: 50px;
+    height: 44px;
+    padding: 2px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cor-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.cor-picker-wrapper input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+.cor-picker-wrapper input[type="color"]:hover {
+    transform: scale(1.05);
+    border-color: var(--cor-destaque);
+}
+
+#cor-hex {
+    flex: 1;
+    min-width: 120px;
+    max-width: 160px;
+    font-family: monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+#cor-hex:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(166, 139, 115, 0.12);
+}
+
+/* Histórico de cores */
+.cor-historico {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--cor-borda);
+    width: 100%;
+}
+
+.cor-historico-item {
+    width: 28px;
+    height: 28px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.cor-historico-item:hover {
+    transform: scale(1.15);
+    border-color: var(--cor-destaque);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.cor-historico-item:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(166, 139, 115, 0.3);
+}
+
+.cor-historico-vazio {
+    font-size: 12px;
+    color: var(--cor-texto-secundario);
+    font-style: italic;
+    width: 100%;
+}
+
+/* Tags / Palavras-chave */
+.tags-input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+#tags-input {
+    flex: 1;
+    min-width: 150px;
+    padding: 11px 13px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background-color: var(--cor-branco);
+    color: var(--cor-texto);
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+#tags-input:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(166, 139, 115, 0.12);
+}
+
+.tags-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 28px;
+}
+
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background-color: var(--cor-destaque);
+    color: var(--cor-branco);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.tag-item button {
+    background: none;
+    border: none;
+    color: var(--cor-branco);
+    padding: 0;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    width: auto;
+    height: auto;
+}
+
+.tag-item button:hover {
+    opacity: 1;
+}
+
+.tags-sugestoes {
+    position: absolute;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    background: var(--cor-branco);
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    box-shadow: var(--sombra);
+    z-index: 100;
+    display: none;
+}
+
+.tags-sugestoes.visivel {
+    display: block;
+}
+
+.tags-sugestoes button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 13px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.tags-sugestoes button:last-child {
+    border-bottom: none;
+}
+
+.tags-sugestoes button:hover {
+    background-color: var(--cor-fundo);
+    color: var(--cor-destaque);
+}
+
+/* Tags nos cards */
+.cartao-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.cartao-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-secundario);
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid var(--cor-borda);
+}
+
+/* Bolinha de cor no título do cartão */
+.cartao-titulo-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.cartao-cor-bolinha {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ========================================
+   5. BOTÕES
+======================================== */
+
+button {
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--cor-destaque);
+    color: var(--cor-branco);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: var(--cor-destaque-hover);
+}
+
+/* ========================================
+   6. MENU LATERAL
+======================================== */
+
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+
+    background-color: var(--cor-menu);
+
+    padding: 80px 15px 25px; /* 80px para compensar header fixo */
+
+    overflow-y: auto;
+
+    z-index: 100;
+
+    transition:
+        width 0.3s ease,
+        padding 0.3s ease,
+        visibility 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.app.menu-fechado aside {
+    width: 0;
+    padding: 80px 0 25px;
+    visibility: hidden;
+    opacity: 0;
+}
+
+aside nav ul {
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+aside nav a {
+    display: block;
+
+    padding: 12px 14px;
+
+    color: #D7D9D8;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    border-radius: 6px;
+
+    transition: 0.2s;
+}
+
+aside nav a:hover:not(.ativo) {
+    background-color: var(--cor-menu-hover);
+    color: var(--cor-branco);
+}
+
+aside nav a.ativo {
+    background-color: var(--cor-destaque);
+    color: var(--cor-branco);
+    font-weight: 600;
+}
+
+/* ========================================
+   7. CONTEÚDO PRINCIPAL
+======================================== */
+
+main {
+    flex: 1;
+    min-width: 0;
+
+    padding: 100px 40px 60px; /* 100px para compensar header fixo */
+
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+section {
+    margin-bottom: 35px;
+
+    scroll-margin-top: 25px;
+}
+
+section h2 {
+    margin-bottom: 20px;
+
+    font-size: 19px;
+    font-weight: 600;
+}
+
+/* ========================================
+   8. INDICADORES
+======================================== */
+
+.indicadores {
+    display: grid;
+
+    /* Responsivo: mínimo 180px por cartão, expande para preencher */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 18px;
+}
+
+.indicadores article {
+    padding: 22px;
+
+    background-color: var(--cor-branco);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 9px;
+
+    box-shadow: var(--sombra);
+}
+
+.indicadores h3 {
+    margin-bottom: 12px;
+
+    color: var(--cor-texto-secundario);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.indicadores p {
+    font-size: 27px;
+    font-weight: 600;
+}
+
+/* ========================================
+   9. CARTÕES DAS PEÇAS
+======================================== */
+
+#lista-pecas {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+    gap: 18px;
+}
+
+#lista-pecas article {
+    padding: 0;
+
+    background-color: var(--cor-branco);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 9px;
+
+    box-shadow: var(--sombra);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.cartao-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 16px 20px;
+
+    background-color: var(--cor-fundo);
+    border-bottom: 1px solid var(--cor-borda);
+
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cartao-cabecalho:hover {
+    background-color: #eceae6;
+}
+
+.cartao-cabecalho h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cor-texto);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}
+
+.cartao-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+
+    color: var(--cor-texto-secundario);
+
+    cursor: pointer;
+    flex-shrink: 0;
+
+    transition: all 0.2s ease;
+}
+
+.cartao-toggle:hover {
+    background-color: var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+.cartao-toggle svg {
+    transition: transform 0.2s ease;
+}
+
+.cartao-toggle[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+
+.cartao-detalhes {
+    padding: 16px 20px;
+
+    color: var(--cor-texto);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.detalhe-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    padding: 6px 0;
+}
+
+.detalhe-linha:not(:last-child) {
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.detalhe-label {
+    color: var(--cor-texto-secundario);
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.detalhe-valor {
+    color: var(--cor-texto);
+    text-align: right;
+    word-break: break-word;
+}
+
+.detalhe-valor.status-ativa {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.detalhe-valor.status-inativa {
+    color: #c62828;
+    font-weight: 600;
+}
+
+.cartao-acoes {
+    display: flex;
+    gap: 8px;
+
+    padding: 12px 20px 20px;
+
+    border-top: 1px solid var(--cor-borda);
+    margin-top: auto;
+}
+
+.cartao-acoes button {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+/* ========================================
+   10. PASTAS E CATEGORIAS
+======================================== */
+
+#lista-pastas,
+#lista-categorias {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+#lista-pastas p,
+#lista-categorias p {
+    padding: 13px 18px;
+
+    background-color: var(--cor-branco);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 7px;
+
+    font-size: 14px;
+}
+
+/* ========================================
+   11. FORMULÁRIOS
+======================================== */
+
+#form-cadastro,
+#form-filtros {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px 18px;
+
+    max-width: 750px;
+
+    padding: 25px;
+
+    background-color: var(--cor-branco);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 9px;
+
+    box-shadow: var(--sombra);
+}
+
+#form-cadastro label,
+#form-filtros label {
+    align-self: end;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#form-cadastro button,
+#form-filtros button {
+    margin-top: 10px;
+}
+
+/* ========================================
+   12. CLASSIFICAÇÕES
+======================================== */
+
+#lista-loja,
+#lista-estoque,
+#lista-loja-visao,
+#lista-estoque-visao {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 12px;
+}
+
+#lista-loja p,
+#lista-estoque p,
+#lista-loja-visao p,
+#lista-estoque-visao p {
+    padding: 16px;
+
+    background-color: var(--cor-branco);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 7px;
+
+    font-size: 14px;
+}
+
+/* ========================================
+   13. RODAPÉ
+======================================== */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+
+    padding: 12px 40px;
+
+    background-color: var(--cor-branco);
+
+    border-top: 1px solid var(--cor-borda);
+
+    text-align: center;
+
+    color: var(--cor-texto-secundario);
+
+    font-size: 12px;
+
+    z-index: 1000;
+    transition: left 0.3s ease;
+}
+
+.app.menu-fechado footer {
+    left: 0;
+}
+
+/* ========================================
+   14. MODAL DE EDIÇÃO
+======================================== */
+
+.modal-edicao {
+    position: fixed;
+    inset: 0;
+
+    background-color: rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+
+    padding: 20px;
+
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-conteudo {
+    background-color: var(--cor-branco);
+
+    border-radius: 12px;
+
+    padding: 30px;
+
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+    animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-conteudo h2 {
+    margin-bottom: 24px;
+
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+#form-edicao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 18px;
+}
+
+#form-edicao label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+#form-edicao input,
+#form-edicao select {
+    padding: 10px 12px;
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+
+    background-color: var(--cor-branco);
+    color: var(--cor-texto);
+
+    font-size: 14px;
+
+    outline: none;
+    transition: 0.2s;
+}
+
+#form-edicao input:focus,
+#form-edicao select:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(166, 139, 115, 0.12);
+}
+
+#form-edicao #edicao-nome {
+    grid-column: 1 / -1;
+}
+
+#form-edicao #edicao-pasta {
+    grid-column: 1 / -1;
+}
+
+.modal-botoes {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.modal-botoes button {
+    padding: 10px 20px;
+}
+
+.modal-botoes button[type="button"] {
+    background-color: var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+.modal-botoes button[type="button"]:hover {
+    background-color: #ddd;
+}
+
+/* ========================================
+   15. LOGIN & USER INFO
+======================================== */
+
+.login-box {
+    background-color: var(--cor-branco);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h2 {
+    margin-bottom: 6px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--cor-texto);
+    text-align: center;
+}
+
+.login-subtitle {
+    color: var(--cor-texto-secundario);
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+#form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+#form-login label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+#form-login input {
+    padding: 12px 14px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background-color: var(--cor-branco);
+    color: var(--cor-texto);
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+#form-login input:focus {
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 2px rgba(166, 139, 115, 0.12);
+}
+
+#form-login button {
+    margin-top: 8px;
+    padding: 14px;
+    font-size: 15px;
+}
+
+.login-toggle {
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    font-size: 13px;
+    margin: 0;
+}
+
+.login-toggle button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--cor-destaque);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.login-toggle button:hover {
+    color: var(--cor-destaque-hover);
+    text-decoration: underline;
+}
+
+.login-erro {
+    color: #c62828;
+    font-size: 13px;
+    text-align: center;
+    min-height: 18px;
+    margin-top: 8px;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+#usuario-email {
+    font-size: 13px;
+    color: var(--cor-texto-secundario);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+#btn-sair {
+    background-color: transparent;
+    color: var(--cor-texto-secundario);
+    padding: 6px 12px;
+    font-size: 12px;
+    border: 1px solid var(--cor-borda);
+}
+
+#btn-sair:hover {
+    background-color: var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+/* ========================================
+   16. RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 800px) {
+
+    .app {
+        padding-left: 200px;
+    }
+
+    .app.menu-fechado {
+        padding-left: 0;
+    }
+
+    header {
+        left: 200px;
+        padding: 15px 20px;
+    }
+
+    .app.menu-fechado header {
+        left: 0;
+    }
+
+    aside {
+        width: 200px;
+        padding-top: 70px;
+    }
+
+    .app.menu-fechado aside {
+        width: 0;
+        padding-top: 70px;
+    }
+
+    main {
+        padding: 90px 20px 50px;
+    }
+
+    footer {
+        left: 200px;
+        padding: 10px 20px;
+    }
+
+    .app.menu-fechado footer {
+        left: 0;
+    }
+
+    #form-busca {
+        width: 280px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .app {
+        padding-left: 0;
+        padding-top: 0;
+    }
+
+    .app.menu-fechado {
+        padding-left: 0;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: var(--cor-branco);
+        border-bottom: 1px solid var(--cor-borda);
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    header h1 {
+        font-size: 18px;
+        text-align: center;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Remove menu button on mobile */
+    #botao-menu {
+        display: none;
+    }
+
+    /* Search form visible on mobile, full width */
+    #form-busca {
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        order: 2;
+        margin-top: 8px;
+    }
+
+    #form-busca #busca {
+        width: 100%;
+    }
+
+    .usuario-info {
+        display: none;
+    }
+
+    /* Hide sidebar completely on mobile */
+    aside {
+        display: none;
+    }
+
+    main {
+        padding: 70px 15px 80px;
+    }
+
+    .indicadores {
+        grid-template-columns: 1fr;
+    }
+
+    #form-cadastro,
+    #form-filtros {
+        grid-template-columns: 1fr;
+        padding: 18px;
+    }
+
+    .cor-picker-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .cor-picker-wrapper input[type="color"] {
+        width: 100%;
+        height: 48px;
+        justify-self: center;
+    }
+
+    #cor-hex {
+        max-width: none;
+        text-align: center;
+    }
+
+    .cor-historico {
+        justify-content: center;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 15px;
+        z-index: 1000;
+    }
+
+    #lista-pecas {
+        grid-template-columns: 1fr;
+    }
+
+    .cartao-cabecalho h3 {
+        font-size: 14px;
+    }
+
+    .detalhe-linha {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .detalhe-valor {
+        text-align: left;
+    }
+
+    .cartao-acoes {
+        flex-direction: column;
+    }
+
+    .cartao-acoes button {
+        width: 100%;
+    }
+
+    .login-box {
+        padding: 28px 20px;
+        border-radius: 0;
+        max-width: 100%;
+        height: 100vh;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .usuario-info {
+        gap: 8px;
+    }
+
+    #usuario-email {
+        max-width: 140px;
+        font-size: 12px;
+    }
+}

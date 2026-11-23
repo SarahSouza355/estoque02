@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Estoque - Pastas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="tela-login" class="tela-login">
+        <div class="login-box">
+            <h2>Sistema de Estoque</h2>
+            <p class="login-subtitle">Faça login para acessar seus dados</p>
+            <form id="form-login">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required autocomplete="email">
+                <label for="login-senha">Senha</label>
+                <input type="password" id="login-senha" required autocomplete="current-password">
+                <button type="submit">Entrar</button>
+            </form>
+            <p class="login-toggle">Não tem conta? <button type="button" id="btn-cadastro-usuario">Criar</button></p>
+            <p id="login-erro" class="login-erro"></p>
+        </div>
+    </div>
+
+    <!-- App (escondido até logar) -->
+    <div id="app" class="app oculto">
+        <!-- Cabeçalho -->
+        <header>
+            <h1>Sistema de Estoque</h1>
+            <button
+                type="button"
+                id="botao-menu"
+                aria-label="Abrir ou fechar menu"
+                aria-expanded="true"
+                aria-controls="menu-lateral"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="usuario-info" class="usuario-info">
+                <span id="usuario-email"></span>
+                <button type="button" id="btn-sair" aria-label="Sair">Sair</button>
+            </div>
+        </header>
+        <!-- Menu lateral -->
+        <aside id="menu-lateral">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Visão geral</a></li>
+                    <li><a href="estoque.html">Estoque</a></li>
+                    <li><a href="pastas.html" class="ativo">Pastas</a></li>
+                    <li><a href="categorias.html">Categorias</a></li>
+                    <li><a href="loja.html">Loja</a></li>
+                    <li><a href="configuracoes.html">Configurações</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- Conteúdo principal -->
+        <main>
+            <!-- Pastas -->
+            <section id="pastas">
+                <h2>Pastas</h2>
+                <button type="button" id="criar-pasta">Criar pasta</button>
+                <div id="lista-pastas">
+                    <!-- As pastas aparecerão aqui -->
+                </div>
+            </section>
+        </main>
+        <!-- Rodapé -->
+        <footer>
+            <p>Sistema de Estoque</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK (compat v9) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <!-- Config Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBBDmRQNf954P33kcLzNrDBoTzP-yA58U",
+            authDomain: "estoque-loja-e121f.firebaseapp.com",
+            projectId: "estoque-loja-e121f",
+            storageBucket: "estoque-loja-e121f.firebasestorage.app",
+            messagingSenderId: "114518894207",
+            appId: "1:114518894207:web:c06873fc04ef907c8ec14a",
+            measurementId: "G-Q3TF2ZT775"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Estoque - Visão Geral</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="tela-login" class="tela-login">
+        <div class="login-box">
+            <h2>Sistema de Estoque</h2>
+            <p class="login-subtitle">Faça login para acessar seus dados</p>
+            <form id="form-login">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required autocomplete="email">
+                <label for="login-senha">Senha</label>
+                <input type="password" id="login-senha" required autocomplete="current-password">
+                <button type="submit">Entrar</button>
+            </form>
+            <p class="login-toggle">Não tem conta? <button type="button" id="btn-cadastro-usuario">Criar</button></p>
+            <p id="login-erro" class="login-erro"></p>
+        </div>
+    </div>
+
+    <!-- App (escondido até logar) -->
+    <div id="app" class="app oculto">
+        <!-- Cabeçalho -->
+        <header>
+            <h1>Sistema de Estoque</h1>
+            <button
+                type="button"
+                id="botao-menu"
+                aria-label="Abrir ou fechar menu"
+                aria-expanded="true"
+                aria-controls="menu-lateral"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <form id="form-busca" role="search" aria-label="Buscar peças">
+                <input
+                    type="search"
+                    id="busca"
+                    placeholder="Buscar peças..."
+                    autocomplete="off"
+                    aria-label="Buscar peças"
+                >
+            </form>
+            <div id="usuario-info" class="usuario-info">
+                <span id="usuario-email"></span>
+                <button type="button" id="btn-sair" aria-label="Sair">Sair</button>
+            </div>
+        </header>
+        <!-- Menu lateral -->
+        <aside id="menu-lateral">
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="ativo">Visão geral</a></li>
+                    <li><a href="estoque.html">Estoque</a></li>
+                    <li><a href="pastas.html">Pastas</a></li>
+                    <li><a href="categorias.html">Categorias</a></li>
+                    <li><a href="loja.html">Loja</a></li>
+                    <li><a href="configuracoes.html">Configurações</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <!-- Conteúdo principal -->
+        <main>
+            <!-- Visão geral -->
+            <section id="visao-geral">
+                <h2>Visão geral</h2>
+                <div class="indicadores">
+                    <article>
+                        <h3>Total de peças</h3>
+                        <p id="total-pecas">0</p>
+                    </article>
+                    <article>
+                        <h3>Peças ativas</h3>
+                        <p id="pecas-ativas">0</p>
+                    </article>
+                    <article>
+                        <h3>Peças inativas</h3>
+                        <p id="pecas-inativas">0</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Peças na Loja -->
+            <section id="loja-visao">
+                <h2>Loja</h2>
+                <div id="lista-loja-visao">
+                    <!-- Peças com classificação "loja" aparecerão aqui -->
+                </div>
+            </section>
+
+            <!-- Peças no Estoque -->
+            <section id="estoque-visao">
+                <h2>Estoque</h2>
+                <div id="lista-estoque-visao">
+                    <!-- Peças com classificação "estoque" aparecerão aqui -->
+                </div>
+            </section>
+
+            <!-- Cadastro de peças -->
+            <section id="cadastro">
+                <h2>Cadastrar peça</h2>
+                <form id="form-cadastro">
+                    <label for="nome">Nome da peça</label>
+                    <input type="text" id="nome" required>
+
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca">
+
+                    <label for="tamanho">Tamanho</label>
+                    <input type="text" id="tamanho">
+
+                    <label for="cor">Cor</label>
+                    <div class="cor-picker-wrapper">
+                        <input type="color" id="cor" value="#303536">
+                        <input type="text" id="cor-hex" value="#303536" placeholder="#RRGGBB" maxlength="7">
+                        <div id="cor-historico" class="cor-historico"></div>
+                    </div>
+
+                    <label for="categoria">Categoria</label>
+                    <input type="text" id="categoria">
+
+                    <label for="material">Material</label>
+                    <input type="text" id="material">
+
+                    <label for="tags">Palavras-chave / Tags</label>
+                    <div class="tags-input-wrapper">
+                        <input type="text" id="tags-input" placeholder="Digite e pressione Enter para adicionar" autocomplete="off">
+                        <div id="tags-lista" class="tags-lista"></div>
+                        <div id="tags-sugestoes" class="tags-sugestoes"></div>
+                    </div>
+                    <input type="hidden" id="tags" name="tags" value="">
+
+                    <label for="preco">Preço atual</label>
+                    <input type="number" id="preco" min="0" step="0.01">
+
+                    <label for="desconto">Desconto (%)</label>
+                    <input type="number" id="desconto" min="0" max="100">
+
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="ativa">Ativa</option>
+                        <option value="inativa">Inativa</option>
+                    </select>
+
+                    <label for="classificacao">Classificação</label>
+                    <select id="classificacao">
+                        <option value="loja">Loja</option>
+                        <option value="estoque">Estoque</option>
+                    </select>
+
+                    <label for="pasta">Pasta</label>
+                    <select id="pasta">
+                        <option value="">Nenhuma pasta</option>
+                    </select>
+
+                    <button type="submit">Cadastrar peça</button>
+                </form>
+            </section>
+        </main>
+        <!-- Rodapé -->
+        <footer>
+            <p>Sistema de Estoque</p>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK (compat v9) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <!-- Config Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBBDmRQNf954P33kcLzNrDBoTzP-yA58U",
+            authDomain: "estoque-loja-e121f.firebaseapp.com",
+            projectId: "estoque-loja-e121f",
+            storageBucket: "estoque-loja-e121f.firebasestorage.app",
+            messagingSenderId: "114518894207",
+            appId: "1:114518894207:web:c06873fc04ef907c8ec14a",
+            measurementId: "G-Q3TF2ZT775"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
